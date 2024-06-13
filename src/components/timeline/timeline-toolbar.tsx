@@ -30,6 +30,7 @@ const TimelineToolbar: FunctionComponent<TimelineToolbarProps> = ({
   onActivateTimelineItem,
   onUpdateTimelineMode,
   onUpdateTextContentDensity,
+  mode,
 }: TimelineToolbarProps) => {
   // Access the global context
   const {
@@ -39,7 +40,6 @@ const TimelineToolbar: FunctionComponent<TimelineToolbarProps> = ({
     darkMode,
     toolbarPosition,
     textDensity,
-    mode,
     isMobile,
     enableLayoutSwitch,
   } = useContext(GlobalContext);

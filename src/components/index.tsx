@@ -2,25 +2,10 @@ import { TimelineItemModel } from '@models/TimelineItemModel';
 import { TimelineProps } from '@models/TimelineModel';
 import { getUniqueID } from '@utils/index';
 import dayjs from 'dayjs';
-import React, { useCallback, useEffect, useRef, useState, useContext } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import GlobalContextProvider from './GlobalContext';
-import { GlobalContext } from './GlobalContext';
 import Timeline from './timeline/timeline';
 const toReactArray = React.Children.toArray;
-
-// Define the WrapperComponent with correct typing for children
-const WrapperComponent: React.FunctionComponent<React.PropsWithChildren<{}>> = ({ children }) => {
-  console.log('WrapperComponent', children);
-  const { mode } = useContext(GlobalContext);
-  console.log('WrapperComponent mode', mode);
-
-  // You can add additional logic or context here if needed
-  return (
-    <>
-      {children}
-    </>
-  );
-};
 
 const Chrono: React.FunctionComponent<Partial<TimelineProps>> = (
   props: TimelineProps,
@@ -34,9 +19,8 @@ const Chrono: React.FunctionComponent<Partial<TimelineProps>> = (
     onItemSelected,
     activeItemIndex = 0,
     titleDateFormat = 'MMM DD, YYYY',
+    mode,
   } = props;
-
-  const { mode } = useContext(GlobalContext); // Get the mode from context
 
   const [timeLineItems, setTimeLineItems] = useState<TimelineItemModel[]>([]);
   const timeLineItemsRef = useRef<TimelineItemModel[]>();
@@ -203,40 +187,30 @@ const Chrono: React.FunctionComponent<Partial<TimelineProps>> = (
     iconChildren = (iconChildren[0] as any).props.children;
   }
 
-  // Reset the timeline when mode changes
-  useEffect(() => {
-    console.log('Mode changed to', mode);
-    setTimeLineItems(initItems(items));
-    setActiveTimelineItem(0);
-    setSlideShowActive(false);
-    // Add any other reset logic if necessary
-  }, [mode]);
-
   return (
     <GlobalContextProvider {...props}>
-      <WrapperComponent>
-        <Timeline
-          activeTimelineItem={activeTimelineItem}
-          contentDetailsChildren={toReactArray(children).filter(
-            (item) => (item as any).props.className !== 'chrono-icons',
-          )}
-          iconChildren={iconChildren}
-          items={timeLineItems}
-          onFirst={handleFirst}
-          onLast={handleLast}
-          onNext={handleOnNext}
-          onPrevious={handleOnPrevious}
-          onRestartSlideshow={restartSlideShow}
-          onTimelineUpdated={handleTimelineUpdate}
-          slideShow={slideShow}
-          slideShowEnabled={slideShow}
-          slideShowRunning={slideShowActive}
-          onScrollEnd={onScrollEnd}
-          onItemSelected={onItemSelected}
-          onOutlineSelection={handleOutlineSelection}
-          onPaused={onPaused}
-        />
-      </WrapperComponent>
+      <Timeline
+        activeTimelineItem={activeTimelineItem}
+        contentDetailsChildren={toReactArray(children).filter(
+          (item) => (item as any).props.className !== 'chrono-icons',
+        )}
+        iconChildren={iconChildren}
+        items={timeLineItems}
+        onFirst={handleFirst}
+        onLast={handleLast}
+        onNext={handleOnNext}
+        onPrevious={handleOnPrevious}
+        onRestartSlideshow={restartSlideShow}
+        onTimelineUpdated={handleTimelineUpdate}
+        slideShow={slideShow}
+        slideShowEnabled={slideShow}
+        slideShowRunning={slideShowActive}
+        onScrollEnd={onScrollEnd}
+        onItemSelected={onItemSelected}
+        onOutlineSelection={handleOutlineSelection}
+        mode={mode}
+        onPaused={onPaused}
+      />
     </GlobalContextProvider>
   );
 };

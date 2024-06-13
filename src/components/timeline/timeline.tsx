@@ -44,6 +44,7 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
     onOutlineSelection,
     slideShowEnabled,
     slideShowRunning,
+    mode = 'HORIZONTAL',
     nestedCardHeight,
     isChild = false,
     onPaused,
@@ -66,8 +67,6 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
     updateHorizontalAllCards,
     toolbarPosition,
     updateTextContentDensity,
-    updateMode,
-    mode,
     disableToolbar,
   } = useContext(GlobalContext);
 
@@ -309,24 +308,15 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
 
   const handleTimelineUpdate = useCallback((mode: string) => {
     if (mode === 'VERTICAL') {
-      updateMode('VERTICAL');
       setTimelineMode('VERTICAL');
     } else if (mode === 'HORIZONTAL') {
-      updateMode('HORIZONTAL');
       setTimelineMode('HORIZONTAL');
       updateHorizontalAllCards?.(false);
     } else if (mode === 'VERTICAL_ALTERNATING') {
-      updateMode('VERTICAL_ALTERNATING');
       setTimelineMode('VERTICAL_ALTERNATING');
     } else if (mode === 'HORIZONTAL_ALL') {
-      updateMode('HORIZONTAL');
-      setTimelineMode('HORIZONTAL');
-      updateHorizontalAllCards?.(false);
-      setTimeout(() => {
-        updateMode('HORIZONTAL_ALL');
-        setTimelineMode('HORIZONTAL_ALL');
-        updateHorizontalAllCards?.(true);
-      }, 1);
+      setTimelineMode('HORIZONTAL_ALL');
+      updateHorizontalAllCards?.(true);
     }
   }, []);
 
@@ -376,7 +366,7 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
             onActivateTimelineItem={handleTimelineItemClick}
             onUpdateTimelineMode={handleTimelineUpdate}
             onUpdateTextContentDensity={updateTextContentDensity}
-            onUpdateMode={updateMode}
+            mode={timelineMode}
           />
         </ToolbarWrapper>
       ) : null}
@@ -461,7 +451,7 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
             hasFocus={hasFocus}
             iconChildren={iconChildren}
             items={items as TimelineCardModel[]}
-            mode={timelineMode}
+            mode={mode}
             onClick={handleTimelineItemClick}
             onElapsed={(itemId?: string) =>
               handleTimelineItemClick(itemId, true)

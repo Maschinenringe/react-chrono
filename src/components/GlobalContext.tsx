@@ -2,7 +2,6 @@
 import {
   TimelineProps as PropsModel,
   TextDensity,
-  TimelineMode,
 } from '@models/TimelineModel';
 import {
   getDefaultButtonTexts,
@@ -21,13 +20,10 @@ import { useMatchMedia } from './effects/useMatchMedia';
 
 export type ContextProps = PropsModel & {
   isMobile?: boolean;
-  mode?: TimelineMode;  // Add mode here
   toggleDarkMode?: () => void;
   updateHorizontalAllCards?: (state: boolean) => void;
-  updateMode?: (mode: TimelineMode) => void;  // Add an updater for mode
   updateTextContentDensity?: (value: TextDensity) => void;
 };
-
 
 const GlobalContext = createContext<ContextProps>({});
 
@@ -66,9 +62,6 @@ const GlobalContextProvider: FunctionComponent<ContextProps> = (props) => {
   const [textContentDensity, setTextContentDensity] =
     useState<TextDensity>(textDensity);
 
-  const [modeType, setModeType] =
-    useState<TimelineMode>(mode || 'VERTICAL_ALTERNATING');
-
   const newCardHeight = useMemo(
     () => Math.max(contentDetailsHeight || 0 + mediaHeight || 0, cardHeight),
     [],
@@ -98,13 +91,6 @@ const GlobalContextProvider: FunctionComponent<ContextProps> = (props) => {
       setTextContentDensity(value);
     },
     [textContentDensity],
-  );
-
-  const updateMode = useCallback(
-    (value: TimelineMode) => {
-      setModeType(value);
-    },
-    [modeType],
   );
 
   useMatchMedia(
@@ -185,7 +171,6 @@ const GlobalContextProvider: FunctionComponent<ContextProps> = (props) => {
           imageFit: 'cover',
           ...mediaSettings,
         },
-        mode: modeType,
         showAllCardsHorizontal: horizontalAll,
         textDensity: textContentDensity,
         theme: {
@@ -194,7 +179,6 @@ const GlobalContextProvider: FunctionComponent<ContextProps> = (props) => {
         },
         toggleDarkMode,
         updateHorizontalAllCards,
-        updateMode,
         updateTextContentDensity,
       }) as ContextProps,
     [
@@ -203,13 +187,8 @@ const GlobalContextProvider: FunctionComponent<ContextProps> = (props) => {
       isDarkMode,
       toggleDarkMode,
       updateHorizontalAllCards,
-      modeType,
-      mode,
-      updateMode,
       textContentDensity,
       isMobileDetected,
-      showAllCardsHorizontal,
-      horizontalAll,
     ],
   );
 
@@ -219,7 +198,6 @@ const GlobalContextProvider: FunctionComponent<ContextProps> = (props) => {
       darkMode: isDarkMode,
       toggleDarkMode,
       updateHorizontalAllCards,
-      updateMode,
     }),
     [defaultProps, isDarkMode],
   );
