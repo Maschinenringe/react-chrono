@@ -12,17 +12,11 @@ import {
 const LayoutSwitcher: FunctionComponent<LayoutSwitcherProp> = ({
   onUpdateTimelineMode,
   theme,
-  mode,
   isDarkMode,
   position,
   isMobile,
 }: LayoutSwitcherProp) => {
-  const { showAllCardsHorizontal, buttonTexts } = useContext(GlobalContext);
-
-  const activeTimelineMode = useMemo(
-    () => mode,
-    [showAllCardsHorizontal, mode],
-  );
+  const { showAllCardsHorizontal, buttonTexts, mode } = useContext(GlobalContext);
 
   const layoutOptions = useMemo(
     () => ({
@@ -40,18 +34,18 @@ const LayoutSwitcher: FunctionComponent<LayoutSwitcherProp> = ({
         description: layoutOptions.vertical.helpText,
         id: 'VERTICAL',
         onSelect: () => onUpdateTimelineMode('VERTICAL'),
-        selected: activeTimelineMode === 'VERTICAL',
+        selected: mode === 'VERTICAL',
         title: layoutOptions.vertical.text,
       },
       {
         description: layoutOptions.alternating.helpText,
         id: 'VERTICAL_ALTERNATING',
         onSelect: () => onUpdateTimelineMode('VERTICAL_ALTERNATING'),
-        selected: activeTimelineMode === 'VERTICAL_ALTERNATING',
+        selected: mode === 'VERTICAL_ALTERNATING',
         title: layoutOptions.alternating.text,
       },
     ],
-    [activeTimelineMode],
+    [mode],
   );
 
   // horizontal list OF options when the mode is `HORIZONTAL`
@@ -63,7 +57,7 @@ const LayoutSwitcher: FunctionComponent<LayoutSwitcherProp> = ({
         onSelect: () => {
           onUpdateTimelineMode('HORIZONTAL');
         },
-        selected: activeTimelineMode === 'HORIZONTAL',
+        selected: mode === 'HORIZONTAL',
         title: layoutOptions.horizontal.text,
       },
       {
@@ -72,11 +66,11 @@ const LayoutSwitcher: FunctionComponent<LayoutSwitcherProp> = ({
         onSelect: () => {
           onUpdateTimelineMode('HORIZONTAL_ALL');
         },
-        selected: activeTimelineMode === 'HORIZONTAL_ALL',
+        selected: mode === 'HORIZONTAL_ALL',
         title: layoutOptions.horizontal_all.text,
       },
     ],
-    [activeTimelineMode],
+    [mode],
   );
 
   return (

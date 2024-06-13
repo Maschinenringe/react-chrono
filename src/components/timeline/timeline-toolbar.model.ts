@@ -17,10 +17,10 @@ export type TimelineToolbarProps = Pick<
   | 'onFirst'
   | 'onLast'
   | 'items'
-  | 'mode'
 > & {
   id: string;
   onActivateTimelineItem: (id: string) => void;
+  onUpdateMode: (mode: TimelineMode) => void;
   onUpdateTextContentDensity: (value: TextDensity) => void;
   onUpdateTimelineMode: (mode: TimelineMode) => void;
   toggleDarkMode: () => void;
