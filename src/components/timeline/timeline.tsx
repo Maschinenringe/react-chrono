@@ -1,6 +1,6 @@
 import { Scroll } from '@models/TimelineHorizontalModel';
 import { TimelineCardModel } from '@models/TimelineItemModel';
-import { TimelineModel } from '@models/TimelineModel';
+import { TimelineModel, TimelineMode } from '@models/TimelineModel';
 import { getUniqueID } from '@utils/index';
 import cls from 'classnames';
 import React, {
@@ -12,6 +12,7 @@ import React, {
   useState,
 } from 'react';
 import { GlobalContext } from '../GlobalContext';
+import { ModeContext } from '../index';
 import useNewScrollPosition from '../effects/useNewScrollPosition';
 import TimelineHorizontal from '../timeline-horizontal/timeline-horizontal';
 import TimelineVertical from '../timeline-vertical/timeline-vertical';
@@ -67,8 +68,13 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
     updateHorizontalAllCards,
     toolbarPosition,
     updateTextContentDensity,
-    disableToolbar,
+    disableToolbar
   } = useContext(GlobalContext);
+
+  const {
+    renderMode,
+    setRenderMode
+  } = useContext(ModeContext);
 
   const [newOffSet, setNewOffset] = useNewScrollPosition(mode, itemWidth);
   const observer = useRef<IntersectionObserver | null>(null);
@@ -306,7 +312,10 @@ const Timeline: React.FunctionComponent<TimelineModel> = (
     [disableNavOnKey, slideShowRunning, handleKeySelection],
   );
 
-  const handleTimelineUpdate = useCallback((mode: string) => {
+  const handleTimelineUpdate = useCallback((mode: TimelineMode) => {
+    console.log('handleTimelineUpdate mode', mode);
+    console.log('setRenderMode', !!setRenderMode);
+    setRenderMode?.(mode);
     if (mode === 'VERTICAL') {
       setTimelineMode('VERTICAL');
     } else if (mode === 'HORIZONTAL') {

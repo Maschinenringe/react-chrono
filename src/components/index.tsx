@@ -1,13 +1,56 @@
 import { TimelineItemModel } from '@models/TimelineItemModel';
-import { TimelineProps } from '@models/TimelineModel';
+import { TimelineProps, TimelineMode } from '@models/TimelineModel';
 import { getUniqueID } from '@utils/index';
 import dayjs from 'dayjs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useRef, useState, createContext, useContext } from 'react';
 import GlobalContextProvider from './GlobalContext';
 import Timeline from './timeline/timeline';
 const toReactArray = React.Children.toArray;
 
-const Chrono: React.FunctionComponent<Partial<TimelineProps>> = (
+interface ModeContextProps {
+  horizontalAll: boolean;
+  renderMode: TimelineMode;
+  setRenderMode: (mode: TimelineMode) => void;
+}
+
+export const ModeContext = createContext<ModeContextProps | undefined>(undefined);
+
+export const useRenderMode = () => {
+  const context = useContext(ModeContext);
+  if (!context) {
+    throw new Error('useRenderMode must be used within a ModeProvider');
+  }
+  return context;
+};
+
+export const ModeProvider: React.FC<{ children: ReactNode; mode?: TimelineMode; }> = ({ children, mode = 'VERTICAL_ALTERNATING'}) => {
+  const [renderMode, setRenderMode] = useState<TimelineMode>(mode);
+  const [horizontalAll, setHorizontalAll] = useState(mode === 'HORIZONTAL_ALL');
+
+  const setter = (mode: TimelineMode) => {
+    if (mode === 'VERTICAL') {
+      setHorizontalAll(false);
+      setRenderMode('VERTICAL');
+    } else if (mode === 'HORIZONTAL') {
+      setHorizontalAll(false);
+      setRenderMode('HORIZONTAL');
+    } else if (mode === 'VERTICAL_ALTERNATING') {
+      setHorizontalAll(false);
+      setRenderMode('VERTICAL_ALTERNATING');
+    } else if (mode === 'HORIZONTAL_ALL') {
+      setHorizontalAll(true);
+      setRenderMode('HORIZONTAL');
+    }
+  };
+  
+  return (
+    <ModeContext.Provider value={{ horizontalAll, renderMode, setRenderMode: setter }}>
+      {children}
+    </ModeContext.Provider>
+  );
+};
+
+const ChronoInternal: React.FunctionComponent<Partial<TimelineProps>> = (
   props: TimelineProps,
 ) => {
   const {
@@ -188,30 +231,54 @@ const Chrono: React.FunctionComponent<Partial<TimelineProps>> = (
   }
 
   return (
-    <GlobalContextProvider {...props}>
-      <Timeline
-        activeTimelineItem={activeTimelineItem}
-        contentDetailsChildren={toReactArray(children).filter(
-          (item) => (item as any).props.className !== 'chrono-icons',
-        )}
-        iconChildren={iconChildren}
-        items={timeLineItems}
-        onFirst={handleFirst}
-        onLast={handleLast}
-        onNext={handleOnNext}
-        onPrevious={handleOnPrevious}
-        onRestartSlideshow={restartSlideShow}
-        onTimelineUpdated={handleTimelineUpdate}
-        slideShow={slideShow}
-        slideShowEnabled={slideShow}
-        slideShowRunning={slideShowActive}
-        onScrollEnd={onScrollEnd}
-        onItemSelected={onItemSelected}
-        onOutlineSelection={handleOutlineSelection}
-        mode={mode}
-        onPaused={onPaused}
-      />
+    <Timeline
+      activeTimelineItem={activeTimelineItem}
+      contentDetailsChildren={toReactArray(children).filter(
+        (item) => (item as any).props.className !== 'chrono-icons',
+      )}
+      iconChildren={iconChildren}
+      items={timeLineItems}
+      onFirst={handleFirst}
+      onLast={handleLast}
+      onNext={handleOnNext}
+      onPrevious={handleOnPrevious}
+      onRestartSlideshow={restartSlideShow}
+      onTimelineUpdated={handleTimelineUpdate}
+      slideShow={slideShow}
+      slideShowEnabled={slideShow}
+      slideShowRunning={slideShowActive}
+      onScrollEnd={onScrollEnd}
+      onItemSelected={onItemSelected}
+      onOutlineSelection={handleOutlineSelection}
+      mode={mode}
+      onPaused={onPaused}
+    />
+  );
+};
+
+const ChronoWrapper: React.FC<Partial<TimelineProps>> = (props) => {
+  const { renderMode, horizontalAll } = useRenderMode();
+
+  const [recreated, setRecreated] = useState(false);
+
+  useEffect(() => {
+    setRecreated((prev) => !prev); // Trigger re-creation of GlobalContextProvider
+  }, [renderMode, horizontalAll]);
+
+  const extendedProps = { ...props, mode: renderMode, showAllCardsHorizontal: horizontalAll };
+
+  return (
+    <GlobalContextProvider key={recreated.toString()} {...extendedProps}>
+      <ChronoInternal {...extendedProps} />
     </GlobalContextProvider>
+  );
+};
+
+const Chrono: React.FC<Partial<TimelineProps>> = (props) => {
+  return (
+    <ModeProvider mode={props.mode as TimelineMode}>
+      <ChronoWrapper {...props} />
+    </ModeProvider>
   );
 };
 
