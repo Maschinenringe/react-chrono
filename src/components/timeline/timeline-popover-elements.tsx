@@ -73,7 +73,7 @@ const LayoutSwitcher: FunctionComponent<LayoutSwitcherProp> = ({
           onUpdateTimelineMode('HORIZONTAL_ALL');
         },
         selected: activeTimelineMode === 'HORIZONTAL_ALL',
-        title: layoutOptions.horizontal.text,
+        title: layoutOptions.horizontal_all.text,
       },
     ],
     [activeTimelineMode],
@@ -89,11 +89,16 @@ const LayoutSwitcher: FunctionComponent<LayoutSwitcherProp> = ({
       $isMobile={isMobile}
     >
       <List
-        items={
+        /*items={
           mode === 'HORIZONTAL' || mode === 'HORIZONTAL_ALL'
             ? horizontalItems
             : verticalItems
         }
+        show all modes in the list*/
+        items={[
+          ...horizontalItems,
+          ...verticalItems,
+        ]}
         theme={theme}
         multiSelectable
       />
@@ -151,18 +156,18 @@ const ChangeDensity: FunctionComponent<ChangeDensityProp> = ({
   const items = useMemo(
     () => [
       {
-        description: 'Show less text',
+        description: 'Zeigt weniger Text auf einmal',
         id: 'LOW',
         onSelect: () => onChange('LOW'),
         selected: selectedDensity === 'LOW',
-        title: 'Low',
+        title: 'Niedrig',
       },
       {
-        description: 'Show more text',
+        description: 'Zeigt mehr Text auf einmal',
         id: 'HIGH',
         onSelect: () => onChange('HIGH'),
         selected: selectedDensity === 'HIGH',
-        title: 'High',
+        title: 'Hoch',
       },
     ],
     [selectedDensity],

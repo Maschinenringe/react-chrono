@@ -32,45 +32,45 @@ export const getDefaultClassNames = () => ({
 });
 
 export const getDefaultButtonTexts: () => ButtonTexts = () => ({
-  changeDensity: 'Change density',
-  changeDensityOptions: {
-    high: {
-      helpText: 'Show more items at once',
-      text: 'High',
+  "changeDensity": "Textdichte ändern",
+  "changeDensityOptions": {
+    "high": {
+      "helpText": "Zeigt mehr Elemente auf einmal",
+      "text": "Hoch"
     },
-    low: {
-      helpText: 'Show fewer items at once',
-      text: 'Low',
-    },
+    "low": {
+      "helpText": "Zeigt weniger Elemente auf einmal",
+      "text": "Niedrig"
+    }
   },
-  changeLayout: 'Change layout',
-  changeLayoutOptions: {
-    alternating: {
-      helpText: 'Show cards in a vertical layout with alternating fashion',
-      text: 'Alternating',
+  "changeLayout": "Layout ändern",
+  "changeLayoutOptions": {
+    "alternating": {
+      "helpText": "Zeigt Karten in einem vertikalen Layout mit abwechselnder Anordnung",
+      "text": "Abwechselnd"
     },
-    horizontal: {
-      helpText: 'Show cards in a horizontal layout',
-      text: 'Horizontal',
+    "horizontal": {
+      "helpText": "Zeigt Karten in einem horizontalen Layout",
+      "text": "Horizontal"
     },
-    horizontal_all: {
-      helpText: 'Show all cards in a horizontal layout',
-      text: 'Show all cards',
+    "horizontal_all": {
+      "helpText": "Zeigt alle Karten in einem horizontalen Layout",
+      "text": "Horizontal alle Karten"
     },
-    vertical: {
-      helpText: 'Show cards in a vertical layout',
-      text: 'Vertical',
-    },
+    "vertical": {
+      "helpText": "Zeigt Karten in einem vertikalen Layout",
+      "text": "Vertikal"
+    }
   },
-  dark: 'Switch to Dark Mode',
-  first: 'Go to First',
-  jumpTo: 'Jump to',
-  last: 'Go to Last',
-  light: 'Switch to Light Mode',
-  next: 'Next',
-  play: 'Play Slideshow',
-  previous: 'Previous',
-  stop: 'Stop Slideshow',
+  "dark": "In den Dunkelmodus wechseln",
+  "first": "Zum Anfang",
+  "jumpTo": "Springe zu",
+  "last": "Zum Ende",
+  "light": "In den Hellmodus wechseln",
+  "next": "weiter",
+  "play": "Diashow starten",
+  "previous": "zurück",
+  "stop": "Diashow stoppen"
 });
 
 //get slidehow type based on mode

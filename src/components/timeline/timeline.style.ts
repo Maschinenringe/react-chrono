@@ -66,6 +66,7 @@ export const TimelineMain = styled.div`
   align-items: center;
   transition: all 0.2s ease;
   transform: translate(0, -50%);
+  min-width: 100%;
 
   &.vertical {
     align-items: flex-start;
