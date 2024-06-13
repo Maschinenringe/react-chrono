@@ -32,45 +32,46 @@ export const getDefaultClassNames = () => ({
 });
 
 export const getDefaultButtonTexts: () => ButtonTexts = () => ({
-  "changeDensity": "Textdichte ändern",
-  "changeDensityOptions": {
-    "high": {
-      "helpText": "Zeigt mehr Elemente auf einmal",
-      "text": "Hoch"
+  changeDensity: 'Textdichte ändern',
+  changeDensityOptions: {
+    high: {
+      helpText: 'Zeigt mehr Elemente auf einmal',
+      text: 'Hoch',
     },
-    "low": {
-      "helpText": "Zeigt weniger Elemente auf einmal",
-      "text": "Niedrig"
-    }
+    low: {
+      helpText: 'Zeigt weniger Elemente auf einmal',
+      text: 'Niedrig',
+    },
   },
-  "changeLayout": "Layout ändern",
-  "changeLayoutOptions": {
-    "alternating": {
-      "helpText": "Zeigt Karten in einem vertikalen Layout mit abwechselnder Anordnung",
-      "text": "Abwechselnd"
+  changeLayout: 'Layout ändern',
+  changeLayoutOptions: {
+    alternating: {
+      helpText:
+        'Zeigt Karten in einem vertikalen Layout mit abwechselnder Anordnung',
+      text: 'Abwechselnd',
     },
-    "horizontal": {
-      "helpText": "Zeigt Karten in einem horizontalen Layout",
-      "text": "Horizontal"
+    horizontal: {
+      helpText: 'Zeigt Karten in einem horizontalen Layout',
+      text: 'Horizontal',
     },
-    "horizontal_all": {
-      "helpText": "Zeigt alle Karten in einem horizontalen Layout",
-      "text": "Horizontal alle Karten"
+    horizontal_all: {
+      helpText: 'Zeigt alle Karten in einem horizontalen Layout',
+      text: 'Horizontal alle Karten',
     },
-    "vertical": {
-      "helpText": "Zeigt Karten in einem vertikalen Layout",
-      "text": "Vertikal"
-    }
+    vertical: {
+      helpText: 'Zeigt Karten in einem vertikalen Layout',
+      text: 'Vertikal',
+    },
   },
-  "dark": "In den Dunkelmodus wechseln",
-  "first": "Zum Anfang",
-  "jumpTo": "Springe zu",
-  "last": "Zum Ende",
-  "light": "In den Hellmodus wechseln",
-  "next": "weiter",
-  "play": "Diashow starten",
-  "previous": "zurück",
-  "stop": "Diashow stoppen"
+  dark: 'In den Dunkelmodus wechseln',
+  first: 'Zum Anfang',
+  jumpTo: 'Springe zu',
+  last: 'Zum Ende',
+  light: 'In den Hellmodus wechseln',
+  next: 'weiter',
+  play: 'Diashow starten',
+  previous: 'zurück',
+  stop: 'Diashow stoppen',
 });
 
 //get slidehow type based on mode
