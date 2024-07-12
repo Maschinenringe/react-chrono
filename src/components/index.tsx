@@ -23,9 +23,9 @@ export const useRenderMode = () => {
   return context;
 };
 
-export const ModeProvider: React.FC<{ children: ReactNode; mode?: TimelineMode; }> = ({ children, mode = 'VERTICAL_ALTERNATING'}) => {
+export const ModeProvider: React.FC<{ children: ReactNode; mode?: TimelineMode; showAllCardsHorizontal?: boolean; }> = ({ children, mode = 'VERTICAL_ALTERNATING', showAllCardsHorizontal=false}) => {
   const [renderMode, setRenderMode] = useState<TimelineMode>(mode);
-  const [horizontalAll, setHorizontalAll] = useState(mode === 'HORIZONTAL_ALL');
+  const [horizontalAll, setHorizontalAll] = useState(showAllCardsHorizontal);
 
   const setter = (mode: TimelineMode) => {
     if (mode === 'VERTICAL') {
@@ -276,7 +276,7 @@ const ChronoWrapper: React.FC<Partial<TimelineProps>> = (props) => {
 
 const Chrono: React.FC<Partial<TimelineProps>> = (props) => {
   return (
-    <ModeProvider mode={props.mode as TimelineMode}>
+    <ModeProvider {...props}>
       <ChronoWrapper {...props} />
     </ModeProvider>
   );
