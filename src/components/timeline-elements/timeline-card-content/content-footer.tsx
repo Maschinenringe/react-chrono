@@ -95,7 +95,7 @@ const ContentFooter: FunctionComponent<ContentFooterProps> = ({
           theme={theme}
           tabIndex={0}
         >
-          {<span>{showMore ? 'read less' : 'read more'}</span>}
+          {<span>{showMore ? 'weniger' : 'mehr'}</span>}
           <ChevronIconWrapper collapsed={showMore ? 'true' : 'false'}>
             <ChevronIcon />
           </ChevronIconWrapper>

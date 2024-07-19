@@ -1,0 +1,21 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ELIFECYCLE",
+    "errno": "ENOENT",
+    "syscall": "spawn",
+    "file": "sh",
+    "pkgid": "react-chrono@2.6.1",
+    "stage": "rollup",
+    "script": "rollup -c rollup.config.mjs",
+    "pkgname": "react-chrono",
+    "err": {
+      "name": "Error",
+      "message": "react-chrono@2.6.1 rollup: `rollup -c rollup.config.mjs`\nspawn ENOENT",
+      "code": "ELIFECYCLE",
+      "stack": "Error: react-chrono@2.6.1 rollup: `rollup -c rollup.config.mjs`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/Users/loafer/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:93073:22)\n    at ChildProcess.emit (node:events:520:28)\n    at maybeClose (node:internal/child_process:1105:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:305:5)"
+    }
+  }
+}
