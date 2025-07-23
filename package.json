@@ -192,5 +192,11 @@
   },
   "main": "dist/react-chrono.js",
   "module": "dist/react-chrono.esm.js",
-  "umd": "dist/react-chrono.umd.js"
+  "umd": "dist/react-chrono.umd.js",
+  "resolutions": {
+  	"stylus": "github:stylus/stylus#0.64.0"
+  },
+  "overrides": {
+  	"stylus": "github:stylus/stylus#0.64.0"
+  }
 }
